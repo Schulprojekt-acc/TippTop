@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TippTop - Deine WM 2026 Tipprunde</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@800&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Theme Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Cabinet Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        wm: {
+                            grass: '#15803d',     /* Lush pitch green */
+                            grassLight: '#22c55e',/* Vibrant lawn green */
+                            gold: '#eab308',       /* Trophy gold */
+                            yellow: '#facc15',     /* Bright yellow */
+                            sun: '#f59e0b',        /* Warm gold accent */
+                            sky: '#020617',        /* Midnight sky */
+                            card: '#1e293b',       /* Slate card bg */
+                            navy: '#0f172a',       /* Dark stadium structures */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Stylings for Interactive Stadium & Crowd -->
+    <style>
+        /* Grass stripes texture simulation */
+        .pitch-grass {
+            background: repeating-linear-gradient(
+                90deg,
+                #14532d 0px,
+                #14532d 120px,
+                #166534 120px,
+                #166534 240px
+            );
+        }
+
+        /* 3D Spectator Crowd Cheering Animation */
+        @keyframes fanCheer {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.05); }
+        }
+        
+        .cheering-crowd-row-1 span {
+            display: inline-block;
+            animation: fanCheer 1.8s ease-in-out infinite;
+        }
+        .cheering-crowd-row-2 span {
+            display: inline-block;
+            animation: fanCheer 2.2s ease-in-out infinite;
+            animation-delay: 0.3s;
+        }
+        .cheering-crowd-row-3 span {
+            display: inline-block;
+            animation: fanCheer 2.6s ease-in-out infinite;
+            animation-delay: 0.6s;
+        }
+
+        /* Flag waving simulation */
+        @keyframes flagWav {
+            0%, 100% { transform: rotate(-3deg) skewY(-2deg); }
+            50% { transform: rotate(5deg) skewY(3deg); }
+        }
+        .waving-flag {
+            animation: flagWav 3s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
+        /* Spotlight glow effect */
+        .spotlight-glow {
+            background: radial-gradient(circle, rgba(254, 240, 138, 0.25) 0%, rgba(2, 6, 23, 0) 70%);
+        }
+
+        /* Ball rotation along center spot */
+        @keyframes kickBall {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        .ball-spin {
+            animation: kickBall 10s linear infinite;
+        }
+
+        /* Confetti falling */
+        @keyframes dropConfetti {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+        }
+        .confetti {
+            position: absolute;
+            animation: dropConfetti 4s linear forwards;
+            pointer-events: none;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="bg-wm-sky text-gray-100 font-sans overflow-x-hidden">
+
+<header class="fixed top-0 left-0 w-full z-50 bg-wm-sky/85 backdrop-blur-xl border-b border-wm-grassLight/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        
+        <!-- Premium Bicycle Kick Logo (Fallrückzieher) -->
+        <a href="#" class="flex items-center gap-3 group">
+            <span class="bg-gradient-to-tr from-wm-grassLight via-wm-yellow to-wm-sun p-2 rounded-2xl shadow-2xl group-hover:scale-105 transition-all flex items-center justify-center">
+                <!-- SVG Icon depicting a perfect athletic bicycle kick -->
+                <svg class="w-10 h-10 text-slate-900" viewBox="0 0 100 100" fill="currentColor">
+                    <!-- Ball -->
+                    <circle cx="78" cy="22" r="7" fill="black" />
+                    <circle cx="78" cy="22" r="5" fill="white" />
+                    <!-- Action trails -->
+                    <path d="M 62 30 Q 72 24 70 20" stroke="currentColor" stroke-width="2" stroke-dasharray="2" fill="none" />
+                    <!-- Human silhouette performing a bicycle kick (Fallrückzieher) -->
+                    <path d="M 38 72 
+                             C 42 64, 46 55, 43 46 
+                             C 41 42, 36 40, 31 43 
+                             C 24 47, 18 56, 12 62 
+                             C 10 64, 11 68, 14 68 
+                             C 18 68, 22 61, 27 57 
+                             C 29 55, 30 57, 29 59
+                             L 22 84 C 21 87, 25 89, 27 86 L 38 72 Z" fill="currentColor" />
+                    <!-- Torso & inverted legs kicking high -->
+                    <path d="M 43 46 
+                             C 48 38, 54 32, 64 33 
+                             C 68 34, 71 31, 68 26 
+                             C 64 18, 54 12, 42 16 
+                             C 38 18, 38 23, 40 26 
+                             C 43 32, 44 38, 38 43" fill="currentColor" />
+                    <!-- Support Arm extending downwards -->
+                    <path d="M 39 48 C 34 52, 28 58, 26 65 C 25 68, 29 70, 31 67 C 33 63, 37 56, 41 51" fill="currentColor" />
+                </svg>
+            </span>
+            <div>
+                <span class="font-display text-2xl tracking-wider text-white">TIPP<span class="text-wm-yellow">TOP</span></span>
+                <span class="block text-[10px] tracking-widest text-wm-grassLight font-extrabold uppercase">World Cup Edition 2026</span>
+            </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="hidden md:flex items-center gap-8">
+            <a href="#stadion-erlebnis" class="text-sm font-semibold text-gray-300 hover:text-wm-yellow transition-colors">Stadion-Erlebnis</a>
+            <a href="#demo-tippen" class="text-sm font-semibold text-gray-300 hover:text-wm-grassLight transition-colors flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-wm-yellow animate-ping"></span> Live-Tippen
+            </a>
+            <a href="#tipprunden" class="text-sm font-semibold text-gray-300 hover:text-wm-yellow transition-colors">Eigene Gruppe</a>
+            <a href="#punktesystem" class="text-sm font-semibold text-gray-300 hover:text-gray-100 transition-colors">Regeln</a>
+        </nav>
+
+        <!-- CTAs -->
+        <div class="flex items-center gap-4">
+            <button onclick="scrollToElement('demo-tippen')" class="hidden sm:inline-flex text-sm font-bold text-gray-300 hover:text-white transition-colors">
+                Anmelden
+            </button>
+            <button onclick="scrollToElement('demo-tippen')" class="relative px-6 py-3 bg-gradient-to-r from-wm-yellow to-wm-sun hover:from-wm-sun hover:to-wm-yellow text-slate-900 font-extrabold text-sm rounded-xl transition-all shadow-lg shadow-wm-yellow/20 active:scale-95 duration-200">
+                Jetzt Tippen!
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Toast Center for User Alerts -->
+<div id="toast-container" class="fixed top-24 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+<section id="stadion-erlebnis" class="relative min-h-screen pt-28 pb-20 flex items-center justify-center overflow-hidden pitch-grass">
+    
+    <!-- STADIUM BOWL ARCHITECTURE OVERLAY -->
+    <div class="absolute inset-0 z-0 flex flex-col justify-between pointer-events-none">
+        
+        <!-- Stadium Roof & Floodlight beams shining down -->
+        <div class="absolute top-0 inset-x-0 h-48 bg-gradient-to-b from-wm-sky to-transparent z-10 flex justify-between px-12">
+            <div class="w-1/3 h-96 spotlight-glow -rotate-45 transform origin-top-left"></div>
+            <div class="w-1/3 h-96 spotlight-glow rotate-45 transform origin-top-right"></div>
+        </div>
+
+        <!-- JUBELNDE FANS & TRIBUNEN (CHEERING CROWD SILHOUETTES WITH JERSEY COLORS) -->
+        <!-- We arrange 3 layered rows of cheering spectators in the upper half of the perspective stadium background -->
+        <div class="absolute top-16 inset-x-0 h-80 flex flex-col gap-1.5 justify-end opacity-85 overflow-hidden select-none px-4">
+            
+            <!-- Row 3: Back stands with waving nations flags -->
+            <div class="cheering-crowd-row-3 flex justify-center gap-1.5 text-lg leading-none opacity-40">
+                <span class="text-yellow-400">👤</span><span class="text-blue-500">👤</span><span class="text-red-500">👤</span>
+                <span class="waving-flag text-2xl">🇩🇪</span>
+                <span class="text-green-500">👤</span><span class="text-yellow-400">👤</span><span class="text-blue-500">👤</span>
+                <span class="waving-flag text-2xl">🇦🇷</span>
+                <span class="text-red-500">👤</span><span class="text-green-500">👤</span><span class="text-yellow-400">👤</span>
+                <span class="waving-flag text-2xl">🇫🇷</span>
+                <span class="text-blue-500">👤</span><span class="text-red-500">👤</span><span class="text-green-500">👤</span>
+                <span class="waving-flag text-2xl">🇧🇷</span>
+                <span class="text-yellow-400">👤</span><span class="text-blue-500">👤</span><span class="text-red-500">👤</span>
+            </div>
+
+            <!-- Row 2: Mid stands with various jersey color caps -->
+            <div class="cheering-crowd-row-2 flex justify-center gap-1 text-xl opacity-60">
+                <span class="text-green-500">👤</span><span class="text-yellow-400">👤</span><span class="text-red-500">👤</span>
+                <span class="text-blue-500">👤</span><span class="text-yellow-400">👤</span><span class="text-green-500">👤</span>
+                <span class="waving-flag text-2xl">🇲🇽</span>
+                <span class="text-red-500">👤</span><span class="text-blue-500">👤</span><span class="text-yellow-400">👤</span>
+                <span class="waving-flag text-2xl">🇺🇸</span>
+                <span class="text-green-500">👤</span><span class="text-red-500">👤</span><span class="text-blue-500">👤</span>
+                <span class="text-yellow-400">👤</span><span class="text-green-500">👤</span><span class="text-red-500">👤</span>
+            </div>
+
+            <!-- Row 1: Front seats closest to pitch - hyperactive fans -->
+            <div class="cheering-crowd-row-1 flex justify-center gap-0.5 text-2xl opacity-80">
+                <span class="text-blue-500">👤</span><span class="text-red-500">👤</span><span class="text-yellow-400">👤</span>
+                <span class="text-green-500">👤</span><span class="text-blue-500">👤</span><span class="text-red-500">👤</span>
+                <span class="text-yellow-400">👤</span><span class="text-green-500">👤</span><span class="text-blue-500">👤</span>
+                <span class="text-red-500">👤</span><span class="text-yellow-400">👤</span><span class="text-green-500">👤</span>
+                <span class="text-blue-500">👤</span><span class="text-red-500">👤</span><span class="text-yellow-400">👤</span>
+            </div>
+            
+            <!-- Stadium banner -->
+            <div class="w-full bg-slate-900/90 border-y-4 border-wm-yellow py-1 text-center text-xs font-black text-wm-yellow tracking-widest uppercase">
+                ⚽ WELCOME TO THE FIFA WORLD CUP STADIUM - TIPPEN DIREKT AM ANSTOSSPUNKT ⚽
+            </div>
+        </div>
+
+        <!-- THE CENTER SPOT (ANSTOSSPUNKT) GRAPHIC ELEMENTS UNDERNEATH -->
+        <div class="relative w-full h-[320px] sm:h-[400px] flex items-center justify-center">
+            <!-- Center Line (Mittellinie) -->
+            <div class="absolute inset-y-0 w-2.5 bg-white/30 left-1/2 -translate-x-1/2"></div>
+            <!-- Center Circle (Anstoßkreis) -->
+            <div class="absolute w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] border-8 border-white/30 rounded-full flex items-center justify-center">
+                <!-- Center Spot (Anstoßpunkt) -->
+                <div class="w-12 h-12 bg-white border-4 border-wm-yellow rounded-full shadow-[0_0_30px_rgba(255,255,255,0.8)] flex items-center justify-center relative">
+                    <!-- Little physical match ball -->
+                    <div class="w-8 h-8 bg-slate-100 rounded-full border-2 border-slate-900 flex items-center justify-center ball-spin shadow-lg">
+                        <i class="fa-solid fa-futbol text-slate-900 text-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
+        <div class="max-w-4xl mx-auto space-y-8 bg-slate-950/80 backdrop-blur-md p-8 sm:p-12 rounded-3xl border border-wm-yellow/30 shadow-2xl">
+            
+            <!-- Welcome Ribbon -->
+            <div class="inline-flex items-center gap-2 bg-wm-yellow/20 border-2 border-wm-yellow rounded-full px-5 py-2 text-wm-yellow text-xs sm:text-sm font-black uppercase tracking-wider animate-bounce">
+                <i class="fa-solid fa-trophy text-sm"></i> DIREKT AM ANSTOSSPUNKT DER WM 2026
+            </div>
+            
+            <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl tracking-tight leading-none text-white">
+                Erlebe das modernste <br class="hidden sm:inline" />
+                <span class="bg-gradient-to-r from-wm-yellow via-wm-grassLight to-emerald-400 bg-clip-text text-transparent">WM-Tippspiel</span> aller Zeiten!
+            </h1>
+
+            <p class="text-gray-300 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed font-light">
+                TippTop bringt Stadionatmosphäre direkt auf dein Smartphone. Tritt an auf dem satten Grün, tipp aktuelle Partien und fordere Freunde am Anstoßpunkt heraus!
+            </p>
+
+            <!-- Action buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto pt-4">
+                <button onclick="scrollToElement('demo-tippen')" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-wm-yellow to-wm-sun hover:from-wm-sun hover:to-wm-yellow text-slate-950 font-black text-base rounded-2xl shadow-xl transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-circle-play text-lg"></i> Test-Tipps abgeben
+                </button>
+                <button onclick="scrollToElement('tipprunden')" class="w-full sm:w-auto px-8 py-4 bg-slate-900/90 hover:bg-slate-800 text-wm-yellow border-2 border-wm-yellow/50 rounded-2xl transition-all flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-users"></i> Runde gründen
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- To maintain stunning, cross-platform UI, we write explicit reusable SVGs for national flags rather than standard emojis -->
+<div class="hidden">
+    <!-- Germany flag template -->
+    <svg id="flag-ger" viewBox="0 0 3 2" class="w-full h-full">
+        <rect width="3" height="2" y="0" fill="black"/>
+        <rect width="3" height="0.67" y="0.67" fill="#dd0000"/>
+        <rect width="3" height="0.67" y="1.33" fill="#ffce00"/>
+    </svg>
+    <!-- Argentina flag template -->
+    <svg id="flag-arg" viewBox="0 0 3 2" class="w-full h-full">
+        <rect width="3" height="2" fill="#74acdf"/>
+        <rect width="3" height="0.67" y="0.67" fill="white"/>
+        <circle cx="1.5" cy="1" r="0.2" fill="#f6b40e"/>
+    </svg>
+    <!-- Spain flag template -->
+    <svg id="flag-esp" viewBox="0 0 3 2" class="w-full h-full">
+        <rect width="3" height="2" fill="#aa151b"/>
+        <rect width="3" height="1" y="0.5" fill="#f1bf00"/>
+    </svg>
+    <!-- Brazil flag template -->
+    <svg id="flag-bra" viewBox="0 0 3 2" class="w-full h-full">
+        <rect width="3" height="2" fill="#009739"/>
+        <polygon points="1.5,0.2 2.7,1 1.5,1.8 0.3,1" fill="#fedd00"/>
+        <circle cx="1.5" cy="1" r="0.4" fill="#002776"/>
+    </svg>
+    <!-- USA flag template -->
+    <svg id="flag-usa" viewBox="0 0 3 2" class="w-full h-full">
+        <rect width="3" height="2" fill="#b22234"/>
+        <rect width="3" height="0.15" y="0.15" fill="white"/>
+        <rect width="3" height="0.15" y="0.45" fill="white"/>
+        <rect width="3" height="0.15" y="0.75" fill="white"/>
+        <rect width="3" height="0.15" y="1.05" fill="white"/>
+        <rect width="3" height="0.15" y="1.35" fill="white"/>
+        <rect width="3" height="0.15" y="1.65" fill="white"/>
+        <rect width="1.2" height="1.07" fill="#3c3b6e"/>
+    </svg>
+    <!-- Mexico flag template -->
+    <svg id="flag-mex" viewBox="0 0 3 2" class="w-full h-full">
+        <rect width="1" height="2" fill="#006847"/>
+        <rect width="1" height="2" x="1" fill="#ffffff"/>
+        <rect width="1" height="2" x="2" fill="#c8102e"/>
+        <circle cx="1.5" cy="1" r="0.15" fill="#8b5a2b"/>
+    </svg>
+</div>
+
+<section id="demo-tippen" class="py-24 bg-slate-900 border-t border-wm-grass/40 relative">
+    <div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_center,rgba(34,197,94,0.4)_0,transparent_75%)]"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="bg-wm-yellow/10 border border-wm-yellow/30 rounded-full px-4 py-1.5 text-wm-yellow text-xs font-black uppercase tracking-wider">
+                DEINE LIVE KICK-OFF TICKETS
+            </span>
+            <h2 class="font-display text-3xl sm:text-5xl text-white mt-4 mb-4">Direkt am Anstoßpunkt mittippen!</h2>
+            <p class="text-gray-400 text-base sm:text-lg">Gib hier deine ersten Prognosen für die echten WM-Spiele ab und teste das TippTop-System sofort live!</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Interactive Betting Board (Left) -->
+            <div class="lg:col-span-7 bg-slate-950/80 border border-wm-grass/30 rounded-3xl p-6 sm:p-8 shadow-2xl">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-ticket text-wm-yellow animate-pulse"></i> Aktuelle WM-Spielpaarungen
+                    </h3>
+                    <span class="text-xs bg-wm-yellow/15 border border-wm-yellow/30 text-wm-yellow px-3 py-1 rounded-full font-bold">WM Spieltag 1</span>
+                </div>
+
+                <!-- Match List Container -->
+                <div class="space-y-6">
+                    
+                    <!-- Match 1: GERMANY VS ARGENTINA -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 hover:border-wm-yellow/50 transition-all">
+                        <div class="flex items-center justify-between text-[11px] text-gray-400 font-bold uppercase mb-4">
+                            <span>⚽ Eröffnungsspiel Gruppe A</span>
+                            <span class="text-wm-yellow font-extrabold flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 bg-red-600 rounded-full animate-ping"></span> Live TV
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-12 items-center gap-4">
+                            
+                            <!-- Team 1 -->
+                            <div class="sm:col-span-4 flex items-center sm:justify-end gap-3">
+                                <span class="font-bold text-white text-sm sm:text-base order-2 sm:order-1">Deutschland</span>
+                                <div class="w-10 h-7 rounded overflow-hidden shadow-md order-1 sm:order-2 flex-shrink-0">
+                                    <svg class="w-full h-full"><use href="#flag-ger"/></svg>
+                                </div>
+                            </div>
+
+                            <!-- Score inputs -->
+                            <div class="sm:col-span-4 flex items-center justify-center gap-2">
+                                <input type="number" id="tip-m1-a" min="0" placeholder="0" class="w-14 h-12 bg-slate-950 border-2 border-slate-700 focus:border-wm-yellow rounded-xl text-center text-xl font-extrabold text-wm-yellow focus:outline-none transition-all">
+                                <span class="text-gray-400 font-extrabold text-xl">:</span>
+                                <input type="number" id="tip-m1-b" min="0" placeholder="0" class="w-14 h-12 bg-slate-950 border-2 border-slate-700 focus:border-wm-yellow rounded-xl text-center text-xl font-extrabold text-wm-yellow focus:outline-none transition-all">
+                            </div>
+
+                            <!-- Team 2 -->
+                            <div class="sm:col-span-4 flex items-center justify-start gap-3">
+                                <div class="w-10 h-7 rounded overflow-hidden shadow-md flex-shrink-0">
+                                    <svg class="w-full h-full"><use href="#flag-arg"/></svg>
+                                </div>
+                                <span class="font-bold text-white text-sm sm:text-base">Argentinien</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Match 2: SPAIN VS BRAZIL -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 hover:border-wm-yellow/50 transition-all">
+                        <div class="flex items-center justify-between text-[11px] text-gray-400 font-bold uppercase mb-4">
+                            <span>🔥 Top-Spiel Gruppe B</span>
+                            <span class="text-amber-500 font-black">Spitzenspiel</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-12 items-center gap-4">
+                            
+                            <!-- Team 1 -->
+                            <div class="sm:col-span-4 flex items-center sm:justify-end gap-3">
+                                <span class="font-bold text-white text-sm sm:text-base order-2 sm:order-1">Spanien</span>
+                                <div class="w-10 h-7 rounded overflow-hidden shadow-md order-1 sm:order-2 flex-shrink-0">
+                                    <svg class="w-full h-full"><use href="#flag-esp"/></svg>
+                                </div>
+                            </div>
+
+                            <!-- Score inputs -->
+                            <div class="sm:col-span-4 flex items-center justify-center gap-2">
+                                <input type="number" id="tip-m2-a" min="0" placeholder="0" class="w-14 h-12 bg-slate-950 border-2 border-slate-700 focus:border-wm-yellow rounded-xl text-center text-xl font-extrabold text-wm-yellow focus:outline-none transition-all">
+                                <span class="text-gray-400 font-extrabold text-xl">:</span>
+                                <input type="number" id="tip-m2-b" min="0" placeholder="0" class="w-14 h-12 bg-slate-950 border-2 border-slate-700 focus:border-wm-yellow rounded-xl text-center text-xl font-extrabold text-wm-yellow focus:outline-none transition-all">
+                            </div>
+
+                            <!-- Team 2 -->
+                            <div class="sm:col-span-4 flex items-center justify-start gap-3">
+                                <div class="w-10 h-7 rounded overflow-hidden shadow-md flex-shrink-0">
+                                    <svg class="w-full h-full"><use href="#flag-bra"/></svg>
+                                </div>
+                                <span class="font-bold text-white text-sm sm:text-base">Brasilien</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Match 3: USA VS MEXICO -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 hover:border-wm-yellow/50 transition-all">
+                        <div class="flex items-center justify-between text-[11px] text-gray-400 font-bold uppercase mb-4">
+                            <span>🇺🇸 Nachbarschaftsduell Gruppe C 🇲🇽</span>
+                            <span class="text-wm-grassLight font-bold">Derby</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-12 items-center gap-4">
+                            
+                            <!-- Team 1 -->
+                            <div class="sm:col-span-4 flex items-center sm:justify-end gap-3">
+                                <span class="font-bold text-white text-sm sm:text-base order-2 sm:order-1">USA</span>
+                                <div class="w-10 h-7 rounded overflow-hidden shadow-md order-1 sm:order-2 flex-shrink-0">
+                                    <svg class="w-full h-full"><use href="#flag-usa"/></svg>
+                                </div>
+                            </div>
+
+                            <!-- Score inputs -->
+                            <div class="sm:col-span-4 flex items-center justify-center gap-2">
+                                <input type="number" id="tip-m3-a" min="0" placeholder="0" class="w-14 h-12 bg-slate-950 border-2 border-slate-700 focus:border-wm-yellow rounded-xl text-center text-xl font-extrabold text-wm-yellow focus:outline-none transition-all">
+                                <span class="text-gray-400 font-extrabold text-xl">:</span>
+                                <input type="number" id="tip-m3-b" min="0" placeholder="0" class="w-14 h-12 bg-slate-950 border-2 border-slate-700 focus:border-wm-yellow rounded-xl text-center text-xl font-extrabold text-wm-yellow focus:outline-none transition-all">
+                            </div>
+
+                            <!-- Team 2 -->
+                            <div class="sm:col-span-4 flex items-center justify-start gap-3">
+                                <div class="w-10 h-7 rounded overflow-hidden shadow-md flex-shrink-0">
+                                    <svg class="w-full h-full"><use href="#flag-mex"/></svg>
+                                </div>
+                                <span class="font-bold text-white text-sm sm:text-base">Mexiko</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Simulation Trigger Buttons -->
+                <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                    <button onclick="simulateResults()" class="flex-1 px-6 py-4 bg-gradient-to-r from-wm-yellow via-wm-sun to-yellow-600 text-slate-950 font-black rounded-2xl transition-transform hover:scale-[1.02] shadow-xl flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-wand-magic-sparkles text-lg"></i> Ergebnisse simulieren!
+                    </button>
+                    <button onclick="resetTips()" class="px-6 py-4 bg-slate-900 hover:bg-slate-800 text-gray-400 hover:text-white border-2 border-slate-800 font-semibold rounded-2xl transition-all">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 bg-slate-950/80 border border-wm-grass/30 rounded-3xl p-6 sm:p-8 shadow-2xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-white">
+                        <i class="fa-solid fa-ranking-star text-wm-yellow mr-2 animate-bounce"></i> Live-Leaderboard
+                    </h3>
+                    <span class="text-[10px] font-bold text-wm-yellow uppercase tracking-widest bg-wm-yellow/10 px-2.5 py-1 rounded-md border border-wm-yellow/30">Stadion-Live</span>
+                </div>
+                <p class="text-gray-400 text-xs mb-6">Deine Platzierung ändert sich dynamisch je nach berechneten Punkten am Anstoßpunkt!</p>
+
+                <!-- List of leaderboard players -->
+                <div class="space-y-3" id="leaderboard-list">
+                    
+                    <!-- Rank 1 -->
+                    <div id="leader-1" class="flex items-center justify-between p-4 bg-wm-yellow/15 border border-wm-yellow/40 rounded-2xl transition-all">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 text-center font-display font-black text-wm-yellow text-xl">1</span>
+                            <div class="w-9 h-9 rounded-full bg-wm-yellow text-slate-950 font-black flex items-center justify-center text-xs shadow-md">LE</div>
+                            <div>
+                                <span class="font-bold text-white text-sm block">Lukas Experte</span>
+                                <span class="text-[10px] text-wm-yellow font-semibold">Tipprunde: WM-Fieber 🏆</span>
+                            </div>
+                        </div>
+                        <span class="font-black text-wm-yellow text-lg" id="score-lead-1">9 Pkt.</span>
+                    </div>
+
+                    <!-- User Row (Dynamic highlights) -->
+                    <div id="leader-user" class="flex items-center justify-between p-4 bg-emerald-950/40 border border-emerald-400/40 rounded-2xl ring-2 ring-emerald-400 transition-all">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 text-center font-display font-black text-emerald-400 text-xl" id="user-rank">2</span>
+                            <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-emerald-400 to-wm-yellow text-slate-950 font-black flex items-center justify-center text-xs shadow-md">DU</div>
+                            <div>
+                                <span class="font-black text-emerald-400 text-sm block">Du (Dein Live-Tipp) ✨</span>
+                                <span class="text-[10px] text-gray-400" id="user-progress-text">Trage links deine Tipps ein!</span>
+                            </div>
+                        </div>
+                        <span class="font-black text-emerald-400 text-lg" id="user-score">0 Pkt.</span>
+                    </div>
+
+                    <!-- Rank 3 -->
+                    <div id="leader-3" class="flex items-center justify-between p-4 bg-slate-900/60 border border-slate-800 rounded-2xl transition-all">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 text-center font-display font-bold text-gray-400 text-xl">3</span>
+                            <div class="w-9 h-9 rounded-full bg-slate-800 text-gray-300 font-bold flex items-center justify-center text-xs">KF</div>
+                            <div>
+                                <span class="font-semibold text-white text-sm block">Klose Flanke</span>
+                                <span class="text-[10px] text-gray-500">Tipprunde: Die Kickers</span>
+                            </div>
+                        </div>
+                        <span class="font-bold text-white text-lg" id="score-lead-3">5 Pkt.</span>
+                    </div>
+
+                    <!-- Rank 4 -->
+                    <div id="leader-4" class="flex items-center justify-between p-4 bg-slate-900/60 border border-slate-800 rounded-2xl transition-all">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 text-center font-display font-bold text-gray-400 text-xl">4</span>
+                            <div class="w-9 h-9 rounded-full bg-slate-800 text-gray-300 font-bold flex items-center justify-center text-xs">AL</div>
+                            <div>
+                                <span class="font-semibold text-white text-sm block">Alba Latte</span>
+                                <span class="text-[10px] text-gray-500">Tipprunde: WM-Fieber 🏆</span>
+                            </div>
+                        </div>
+                        <span class="font-bold text-white text-lg" id="score-lead-4">3 Pkt.</span>
+                    </div>
+
+                </div>
+
+                <!-- Live Evaluation Details Panel -->
+                <div id="simulation-box" class="mt-6 p-4 bg-slate-900 border-2 border-wm-yellow/40 rounded-2xl hidden transition-all duration-300">
+                    <h4 class="text-xs font-black text-wm-yellow uppercase tracking-wider mb-3">Live-Punkte Abrechnung:</h4>
+                    <div class="text-xs space-y-2 text-gray-300" id="simulation-details"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="py-24 bg-slate-950 border-t border-wm-grass/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="font-display text-3xl sm:text-5xl text-white mb-4">Perfekte Stadion-UX mit <span class="text-wm-yellow">TippTop</span></h2>
+            <p class="text-gray-400 text-base sm:text-lg">Entwickelt für absolute Spielfreude auf jedem mobilen Endgerät.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Feature Card 1 -->
+            <div class="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-wm-yellow/50 p-8 rounded-3xl transition-all hover:-translate-y-2 group shadow-lg">
+                <div class="w-12 h-12 bg-wm-yellow/10 rounded-2xl flex items-center justify-center text-wm-yellow mb-6 group-hover:bg-wm-yellow group-hover:text-slate-950 transition-all">
+                    <i class="fa-solid fa-mobile-screen text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Mobil-Optimierte Abgabe</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Keine komplizierten Tabellen. Mit wenigen Klicks am Smartphone tippen – direkt vorm Fernseher oder live in der Fankurve.</p>
+            </div>
+
+            <!-- Feature Card 2 -->
+            <div class="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-wm-grassLight/50 p-8 rounded-3xl transition-all hover:-translate-y-2 group shadow-lg">
+                <div class="w-12 h-12 bg-wm-grassLight/10 rounded-2xl flex items-center justify-center text-wm-grassLight mb-6 group-hover:bg-wm-grassLight group-hover:text-slate-950 transition-all">
+                    <i class="fa-solid fa-bolt text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Echtzeit Blitz-Tabelle</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Sobald bei der Weltmeisterschaft ein Tor fällt, aktualisieren sich alle Platzierungen in deiner Tipprunde in Sekundenschnelle live.</p>
+            </div>
+
+            <!-- Feature Card 3 -->
+            <div class="bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-wm-yellow/50 p-8 rounded-3xl transition-all hover:-translate-y-2 group shadow-lg">
+                <div class="w-12 h-12 bg-wm-yellow/10 rounded-2xl flex items-center justify-center text-wm-yellow mb-6 group-hover:bg-wm-yellow group-hover:text-slate-950 transition-all">
+                    <i class="fa-solid fa-crown text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-2">Eigene Gruppen & Admins</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Erstelle geschlossene Runden für dein Büro, deinen Fußballverein oder deine Familie – komplett individualisierbar.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="tipprunden" class="py-24 bg-slate-900 border-t border-wm-grass/40 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Column 1: Info Texts -->
+            <div class="lg:col-span-6 space-y-6">
+                <span class="inline-flex items-center gap-2 bg-wm-yellow/10 border border-wm-yellow/30 rounded-full px-4 py-1.5 text-wm-yellow text-xs font-black uppercase">
+                    <i class="fa-solid fa-users-rectangle"></i> SPASS MIT FREUNDEN & KOLLEGEN
+                </span>
+                <h2 class="font-display text-3xl sm:text-5xl text-white leading-tight">
+                    Gründe deine eigene <br />
+                    <span class="bg-gradient-to-r from-wm-yellow to-wm-grassLight bg-clip-text text-transparent">TippTop-Runde</span>
+                </h2>
+                <p class="text-gray-300 leading-relaxed font-light text-base sm:text-lg">
+                    Lade deine Freunde per Link ein und kickt euch an die Tabellenspitze. Unser Generator liefert dir sofort einen spielbereiten Einladungs-Link für WhatsApp, Telegram oder Slack.
+                </p>
+
+                <ul class="space-y-4 text-gray-300">
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-wm-grassLight text-lg"></i>
+                        <span>Personalisierter Einladungslink für Chat-Apps</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-wm-yellow text-lg"></i>
+                        <span>Eigenes Tipprunden-Dashboard mit Statistiken & Trends</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+                        <span>Flexible Anpassung des Punkteschlüssels</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Column 2: Live Group Generator Form -->
+            <div class="lg:col-span-6 bg-slate-950 border border-wm-grass/30 p-6 sm:p-8 rounded-3xl relative shadow-2xl overflow-hidden">
+                <div class="absolute -top-12 -right-12 w-40 h-40 bg-wm-yellow/10 rounded-full filter blur-2xl"></div>
+                
+                <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-plus text-wm-yellow"></i> Tipprunde sofort anlegen
+                </h3>
+                
+                <form id="group-form" onsubmit="generateGroupLink(event)" class="space-y-4">
+                    <div>
+                        <label for="group-name" class="block text-sm font-semibold text-gray-400 mb-2">Wie soll deine Tipprunde heißen?</label>
+                        <input type="text" id="group-name" required placeholder="z.B. Die WM-Gurus ⚽" class="w-full bg-slate-900 border-2 border-slate-800 focus:border-wm-yellow rounded-xl px-4 py-3 text-white focus:outline-none transition-colors">
+                    </div>
+                    <div>
+                        <label for="group-creator" class="block text-sm font-semibold text-gray-400 mb-2">Dein Name (Spielleiter)</label>
+                        <input type="text" id="group-creator" required placeholder="z.B. Trainer Schmidt" class="w-full bg-slate-900 border-2 border-slate-800 focus:border-wm-yellow rounded-xl px-4 py-3 text-white focus:outline-none transition-colors">
+                    </div>
+
+                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-wm-yellow to-wm-sun hover:from-wm-sun hover:to-wm-yellow text-slate-950 font-black rounded-xl transition-transform hover:scale-[1.02] shadow-xl mt-6">
+                        <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Tippgruppe gratis erstellen
+                    </button>
+                </form>
+
+                <!-- Dynamic Created Invite Card -->
+                <div id="group-result-card" class="hidden mt-6 bg-slate-900 border-2 border-wm-grassLight/40 rounded-2xl p-5 relative transition-all duration-300">
+                    <span class="absolute top-2 right-2 text-[10px] bg-wm-grassLight/20 text-wm-grassLight px-2.5 py-0.5 rounded font-bold uppercase">Bereit!</span>
+                    <h4 class="text-sm font-bold text-white mb-2">Deine Tippgruppe wurde registriert! 🎉</h4>
+                    <p class="text-xs text-gray-400 mb-4">Kopiere den Einladungs-Link und teile ihn mit deinen Freunden:</p>
+                    
+                    <div class="flex items-center gap-2 bg-slate-950 border border-slate-800 rounded-xl p-2.5">
+                        <input type="text" id="shareable-link" readonly value="https://tipptop.de/join?ref=wm2026" class="bg-transparent border-none text-xs text-wm-yellow font-bold focus:outline-none flex-1 select-all">
+                        <button onclick="copyShareableLink()" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-lg flex items-center gap-1 transition-all">
+                            <i class="fa-regular fa-copy"></i> Kopieren
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="punktesystem" class="py-24 bg-slate-950 border-t border-wm-grass/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="font-display text-3xl sm:text-5xl text-white mb-4">Das TippTop <span class="text-wm-yellow">Punktesystem</span></h2>
+            <p class="text-gray-400 text-base sm:text-lg">Jedes Tor zählt. Unser faires System belohnt das richtige Fingerspitzengefühl und sorgt für dauerhafte Spannung.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Rule 1: Exact Outcome -->
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 relative shadow-lg">
+                <div class="absolute top-4 right-4 text-3xl font-black text-wm-yellow">4 Pkt.</div>
+                <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-bullseye text-wm-yellow"></i> Ergebnis-Volltreffer
+                </h3>
+                <p class="text-sm text-gray-400 leading-relaxed mb-4">Du hast das exakte Endergebnis erraten. Besser geht es nicht!</p>
+                <div class="bg-wm-yellow/10 rounded-xl p-3 border border-wm-yellow/20">
+                    <span class="text-xs text-wm-yellow block font-bold mb-1">Beispiel:</span>
+                    <span class="text-xs text-gray-300">Dein Tipp: 2:1 | Ergebnis: 2:1</span>
+                </div>
+            </div>
+
+            <!-- Rule 2: Goal Difference -->
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 relative shadow-lg">
+                <div class="absolute top-4 right-4 text-3xl font-black text-wm-grassLight">3 Pkt.</div>
+                <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-arrows-left-right text-wm-grassLight"></i> Tordifferenz
+                </h3>
+                <p class="text-sm text-gray-400 leading-relaxed mb-4">Du hast die Tordifferenz und den Gewinner richtig erraten.</p>
+                <div class="bg-wm-grassLight/10 rounded-xl p-3 border border-wm-grassLight/20">
+                    <span class="text-xs text-wm-grassLight block font-bold mb-1">Beispiel:</span>
+                    <span class="text-xs text-gray-300">Dein Tipp: 3:1 | Ergebnis: 2:0</span>
+                </div>
+            </div>
+
+            <!-- Rule 3: Tendency -->
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 relative shadow-lg">
+                <div class="absolute top-4 right-4 text-3xl font-black text-yellow-500">2 Pkt.</div>
+                <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-right-long text-yellow-500"></i> Siegertendenz
+                </h3>
+                <p class="text-sm text-gray-400 leading-relaxed mb-4">Die grundlegende Tendenz (Heimsieg, Auswärtssieg, Unentschieden) stimmt.</p>
+                <div class="bg-yellow-500/10 rounded-xl p-3 border border-yellow-500/20">
+                    <span class="text-xs text-yellow-500 block font-bold mb-1">Beispiel:</span>
+                    <span class="text-xs text-gray-300">Dein Tipp: 1:0 | Ergebnis: 3:1</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer class="bg-slate-950 border-t border-slate-900 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+        
+        <!-- Brand Signature -->
+        <div class="flex items-center gap-3">
+            <span class="bg-gradient-to-tr from-wm-yellow to-wm-sun p-2 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-futbol text-slate-950"></i>
+            </span>
+            <span class="font-display text-xl tracking-wider text-white">TIPP<span class="text-wm-yellow">TOP</span></span>
+        </div>
+        
+        <p class="text-xs text-gray-500 text-center md:text-left">
+            &copy; 2026 TippTop WM-Tippspiel. Alle Rechte vorbehalten. Keine offizielle Kooperation mit der FIFA oder Landesverbänden.
+        </p>
+
+        <!-- Terms links -->
+        <div class="flex gap-6 text-sm text-gray-400">
+            <a href="#" class="hover:text-white transition-colors">Datenschutz</a>
+            <a href="#" class="hover:text-white transition-colors">Impressum</a>
+            <a href="#" class="hover:text-white transition-colors">AGB</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Smooth scrolling assistant
+    function scrollToElement(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // Dynamic fixtures data containing real outcomes to simulate against
+    const fixtures = [
+        { id: 1, home: "Deutschland", away: "Argentinien", realHome: 2, realAway: 1 },
+        { id: 2, home: "Spanien", away: "Brasilien", realHome: 1, realAway: 1 },
+        { id: 3, home: "USA", away: "Mexiko", realHome: 2, realAway: 0 }
+    ];
+
+    // Dynamic Toast Center
+    function showToast(message, type = "success") {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        
+        toast.className = `flex items-center p-4 mb-3 text-sm rounded-xl shadow-2xl transition-all duration-300 transform translate-y-2 opacity-0 pointer-events-auto border ${
+            type === 'success' 
+            ? 'bg-slate-950 text-wm-yellow border-wm-yellow/40' 
+            : 'bg-slate-950 text-emerald-400 border-emerald-400/40'
+        }`;
+        
+        toast.innerHTML = `
+            <i class="fa-solid ${type === 'success' ? 'fa-circle-check text-wm-yellow' : 'fa-info text-emerald-400'} text-lg mr-3"></i>
+            <div>${message}</div>
+        `;
+        
+        container.appendChild(toast);
+        
+        // CSS Trigger
+        setTimeout(() => {
+            toast.classList.remove('opacity-0', 'translate-y-2');
+        }, 10);
+
+        // Disappear animation
+        setTimeout(() => {
+            toast.classList.add('opacity-0', 'translate-y-2');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 5000);
+    }
+
+    // Confetti effect inside standard framework rules (No external script required)
+    function triggerConfetti() {
+        const colors = ['#facc15', '#22c55e', '#ef4444', '#3b82f6', '#10b981'];
+        for (let i = 0; i < 40; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            
+            const size = Math.floor(Math.random() * 8) + 6;
+            const left = Math.floor(Math.random() * window.innerWidth);
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const delay = Math.random() * 0.5;
+            const duration = Math.random() * 2 + 2;
+
+            confetti.style.width = `${size}px`;
+            confetti.style.height = `${size}px`;
+            confetti.style.left = `${left}px`;
+            confetti.style.top = `-20px`;
+            confetti.style.backgroundColor = color;
+            confetti.style.borderRadius = '50%';
+            confetti.style.animationDelay = `${delay}s`;
+            confetti.style.animationDuration = `${duration}s`;
+
+            document.body.appendChild(confetti);
+
+            setTimeout(() => {
+                confetti.remove();
+            }, (duration + delay) * 1000);
+        }
+    }
+
+    // Mathematical Evaluation of points
+    function calculatePoints(tipA, tipB, realA, realB) {
+        if (tipA === realA && tipB === realB) {
+            return 4; // Perfect Outcome
+        }
+        
+        const realDiff = realA - realB;
+        const tipDiff = tipA - tipB;
+        
+        if (realDiff !== 0 && realDiff === tipDiff) {
+            return 3; // Correct Difference
+        }
+        
+        if ((realDiff > 0 && tipDiff > 0) || (realDiff < 0 && tipDiff < 0) || (realDiff === 0 && tipDiff === 0)) {
+            return 2; // Correct Tendency
+        }
+        
+        return 0; // Wrong Tipp
+    }
+
+    // Resetting current active tip values
+    function resetTips() {
+        document.getElementById('tip-m1-a').value = '';
+        document.getElementById('tip-m1-b').value = '';
+        document.getElementById('tip-m2-a').value = '';
+        document.getElementById('tip-m2-b').value = '';
+        document.getElementById('tip-m3-a').value = '';
+        document.getElementById('tip-m3-b').value = '';
+        
+        // Reset scoreboard layout state
+        document.getElementById('user-score').innerText = '0 Pkt.';
+        document.getElementById('user-progress-text').innerText = 'Trage links deine Tipps ein!';
+        
+        const userRow = document.getElementById('leader-user');
+        userRow.className = "flex items-center justify-between p-4 bg-emerald-950/40 border border-emerald-400/40 rounded-2xl ring-2 ring-emerald-400 transition-all";
+        document.getElementById('user-rank').innerText = '2';
+
+        document.getElementById('simulation-box').classList.add('hidden');
+        showToast("Die Test-Einträge wurden gelöscht!", "info");
+    }
+
+    // Score Simulation and dynamic rank reallocation
+    function simulateResults() {
+        const t1a = document.getElementById('tip-m1-a').value;
+        const t1b = document.getElementById('tip-m1-b').value;
+        const t2a = document.getElementById('tip-m2-a').value;
+        const t2b = document.getElementById('tip-m2-b').value;
+        const t3a = document.getElementById('tip-m3-a').value;
+        const t3b = document.getElementById('tip-m3-b').value;
+
+        // Verify full completion
+        if (t1a === '' || t1b === '' || t2a === '' || t2b === '' || t3a === '' || t3b === '') {
+            showToast("Bitte fülle alle Tipps aus, um deine WM-Punkte zu berechnen!", "info");
+            return;
+        }
+
+        const tips = [
+            { home: parseInt(t1a), away: parseInt(t1b) },
+            { home: parseInt(t2a), away: parseInt(t2b) },
+            { home: parseInt(t3a), away: parseInt(t3b) }
+        ];
+
+        let totalUserPoints = 0;
+        let detailsHtml = '';
+
+        fixtures.forEach((fix, idx) => {
+            const userTip = tips[idx];
+            const pointsEarned = calculatePoints(userTip.home, userTip.away, fix.realHome, fix.realAway);
+            totalUserPoints += pointsEarned;
+            
+            let explanation = 'Keine Punkte (0 Pkt.)';
+            let colorClass = 'text-gray-400';
+            if (pointsEarned === 4) {
+                explanation = 'Ergebnis-Volltreffer (4 Pkt.)';
+                colorClass = 'text-wm-yellow font-black';
+            } else if (pointsEarned === 3) {
+                explanation = 'Tordifferenz (3 Pkt.)';
+                colorClass = 'text-wm-grassLight font-bold';
+            } else if (pointsEarned === 2) {
+                explanation = 'Siegertendenz (2 Pkt.)';
+                colorClass = 'text-yellow-500';
+            }
+
+            detailsHtml += `
+                <div class="flex justify-between border-b border-slate-800 pb-2 mb-2">
+                    <span class="text-xs text-gray-300">${fix.home} - ${fix.away} (Resultat: ${fix.realHome}:${fix.realAway} | Tipp: ${userTip.home}:${userTip.away})</span>
+                    <span class="${colorClass} text-xs">${explanation}</span>
+                </div>
+            `;
+        });
+
+        // Update view panel
+        const simBox = document.getElementById('simulation-box');
+        simBox.classList.remove('hidden');
+        document.getElementById('simulation-details').innerHTML = detailsHtml;
+
+        const userScoreSpan = document.getElementById('user-score');
+        userScoreSpan.innerText = `${totalUserPoints} Pkt.`;
+        document.getElementById('user-progress-text').innerText = "Deine Punkte wurden berechnet!";
+
+        // Run Leaderboard reorganization
+        adjustLeaderboardPositions(totalUserPoints);
+    }
+
+    // Recalculates exact ranking sorting and animation
+    function adjustLeaderboardPositions(userPoints) {
+        const contestants = [
+            { id: 'leader-1', name: 'Lukas Experte', score: 9, elementId: 'leader-1' },
+            { id: 'leader-user', name: 'Du (Dein Live-Tipp)', score: userPoints, isUser: true, elementId: 'leader-user' },
+            { id: 'leader-3', name: 'Klose Flanke', score: 5, elementId: 'leader-3' },
+            { id: 'leader-4', name: 'Alba Latte', score: 3, elementId: 'leader-4' }
+        ];
+
+        contestants.sort((a, b) => b.score - a.score);
+
+        const listContainer = document.getElementById('leaderboard-list');
+        
+        contestants.forEach((c, index) => {
+            const element = document.getElementById(c.elementId);
+            
+            if (c.isUser) {
+                document.getElementById('user-rank').innerText = (index + 1);
+            } else {
+                element.querySelector('.font-display').innerText = (index + 1);
+            }
+
+            // Style adjustments depending on performance position
+            if (c.isUser) {
+                if (index === 0) {
+                    element.className = "flex items-center justify-between p-4 bg-wm-yellow/20 border-2 border-wm-yellow rounded-2xl ring-4 ring-wm-yellow/40 scale-[1.03] transition-all";
+                    showToast(`🏆 Platz 1! Du hast Lukas vom Thron gestoßen mit ${userPoints} Punkten!`, "success");
+                    triggerConfetti();
+                } else {
+                    element.className = "flex items-center justify-between p-4 bg-emerald-950/40 border border-emerald-400/40 rounded-2xl ring-2 ring-emerald-400 transition-all";
+                }
+            }
+
+            listContainer.appendChild(element);
+        });
+    }
+
+    // Dynamic group invitation generator
+    function generateGroupLink(event) {
+        event.preventDefault();
+        
+        const grpName = document.getElementById('group-name').value;
+        const grpCreator = document.getElementById('group-creator').value;
+
+        if (grpName.trim() === '' || grpCreator.trim() === '') return;
+
+        const sanitized = encodeURIComponent(grpName.toLowerCase().replace(/[^a-z0-9]/g, '-'));
+        const shareLink = document.getElementById('shareable-link');
+        shareLink.value = `https://tipptop.de/join?runde=${sanitized}&invite=${grpCreator.toLowerCase()}`;
+
+        const resultCard = document.getElementById('group-result-card');
+        resultCard.classList.remove('hidden');
+        resultCard.classList.add('animate-pulse');
+        
+        setTimeout(() => {
+            resultCard.classList.remove('animate-pulse');
+        }, 1200);
+
+        showToast(`Tipprunde "${grpName}" wurde erfolgreich angelegt! 🎉`, "success");
+        triggerConfetti();
+    }
+
+    // Simulated copy implementation for restricted platforms
+    function copyShareableLink() {
+        const copyText = document.getElementById("shareable-link");
+        copyText.select();
+        copyText.setSelectionRange(0, 9999); // Mobile compatibility
+
+        try {
+            document.execCommand('copy');
+            showToast("Einladungs-Link kopiert! Sende ihn jetzt an deine Freunde.", "success");
+        } catch (err) {
+            showToast("Fehler beim automatischen Kopieren.", "info");
+        }
+    }
+</script>
+
+</body>
+</html>
